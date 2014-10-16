@@ -9,7 +9,7 @@ def app
   Sinatra::Application
 end
 
-describe "simplonform" do
+describe "The setup" do
 
   it "should display an email field" do 
     get '/'
@@ -36,11 +36,17 @@ describe "simplonform" do
     assert last_response.body.include?('Welcome')
   end
 
-  #it "should send an email to User.email"
+  # it "should validate that the email is valid"
+
+  # it "should send an email to the new user"
+end
+
+describe "Simplon Form" do
 
   it "should handle the form" do
     post '/form', params={name: "mathieu", mail: "carbonel@gmail.com"}
     assert last_response.ok?
   end
 
+  # it "should create a new Form dynamically"
 end

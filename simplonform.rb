@@ -23,10 +23,6 @@ class User
 end
 
 # routes & controllers
-post '/form' do
-  200
-end
-
 get "/" do
   slim :index
 end
@@ -34,4 +30,8 @@ end
 post "/" do
   User.create(email: params[:email])
   slim :welcome
+end
+
+post '/form' do
+  200
 end
