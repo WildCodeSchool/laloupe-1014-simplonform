@@ -33,4 +33,5 @@ end
 
 post "/" do
   User.create(email: params[:email])
+  slim :welcome
 end
