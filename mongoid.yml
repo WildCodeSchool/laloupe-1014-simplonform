@@ -1,0 +1,12 @@
+development:
+  sessions:
+    default:
+      database: form_dev
+      hosts:
+        - localhost:27017
+test:
+  sessions:
+    default:
+      database: form_test
+      hosts:
+        - localhost:27017

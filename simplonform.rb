@@ -1,22 +1,28 @@
 require 'sinatra'
 require 'slim'
+require 'mongoid'
 require 'pry'
-require 'sinatra/activerecord'
-require 'tilt'
-set :database, {adapter: "sqlite3", database: "simplonform.sqlite3"}
 
-class Form < ActiveRecord::Base
-	validates_presence_of :email
+configure do
+	Mongoid.load!("./mongoid.yml")
 end
-post '/form/:token' do
+
+class User
+	include Mongoid::Document
+
+	field :email, type: String
+end
+
+post '/form' do
 	200
 end
 
 get "/" do
 	slim :index
-	end
+end
 
 post "/" do
-	binding.pry
+	User.create(email: params[:email])
 end
+
 

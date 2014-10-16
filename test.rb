@@ -19,4 +19,11 @@ describe "simplonform" do
     get '/'
     assert last_response.body.include? ('email')
   end
+
+  it "should create a user" do
+  	users_count = User.count
+  	post "/", params={email: "yolo@yolo.com"}
+  	assert last_response.ok?
+  	assert_equal users_count + 1, User.count
+  end
 end
