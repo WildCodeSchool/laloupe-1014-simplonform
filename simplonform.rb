@@ -1,7 +1,7 @@
 require 'sinatra'
 require 'slim'
 require 'mongoid'
-require 'pry'
+require 'pry' if development?
 
 configure do
   Mongoid.load!("./mongoid.yml")

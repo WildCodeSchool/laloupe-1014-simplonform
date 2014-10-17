@@ -6,4 +6,6 @@ gem "minitest"
 gem "rack-test"
 gem "mongoid"
 gem "tilt", '~>1.4.1'
-gem "pry"
+group :developement do
+  gem "pry"
+end
