@@ -11,7 +11,7 @@ end
 
 describe "The setup" do
 
-  it "should display an email field" do 
+  it "should display an email field" do
     get '/'
     assert last_response.body.include?('email')
   end
@@ -25,7 +25,7 @@ describe "The setup" do
 
   it "should generate 2 tokens" do
     User.delete_all
-  	post "/", params = {email: "yolo@yolo.com"}
+    post "/", params = {email: "yolo@yolo.com"}
     assert_equal 36, User.last.token.length #uuid
     assert_equal 32, User.last.private_token.length #hex
   end
@@ -36,7 +36,7 @@ describe "The setup" do
     assert last_response.body.include?('Welcome')
   end
 
-  # it "should validate that the email is valid"
+  # it "should not create a user with an invalid email"
 
   # it "should send an email to the new user"
 end
@@ -48,5 +48,7 @@ describe "Simplon Form" do
     assert last_response.ok?
   end
 
-  # it "should create a new Form dynamically"
+  # it "should create a new Form"
+
+  # it "should store all the params posted into the datatbase"
 end
