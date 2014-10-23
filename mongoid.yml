@@ -4,13 +4,16 @@ development:
       database: form_dev
       hosts:
         - localhost:27017
+      allow_dynamic_fields: true
 test:
   sessions:
     default:
       database: form_test
       hosts:
         - localhost:27017
+      allow_dynamic_fields: true
 production:
   sessions:
     default:
       uri: <%= ENV['MONGOHQ_URL'] %>
+      allow_dynamic_fields: true

@@ -44,11 +44,16 @@ end
 describe "Simplon Form" do
 
   it "should handle the form" do
-    post '/form', params={name: "mathieu", mail: "carbonel@gmail.com"}
+    post '/message', params={name: "mathieu", mail: "carbonel@gmail.com"}
     assert last_response.ok?
   end
 
-  # it "should create a new Form"
+  it "should create a new Message" do
+    Message.delete_all
+    post '/message', params = {name: 'Jen dupont', email: 'jd@gmail.com', content: 'Bonjour !'}
+    assert last_response.ok?
+    assert_equal 1, Message.count
+  end
 
   # it "should store all the params posted into the datatbase"
 end

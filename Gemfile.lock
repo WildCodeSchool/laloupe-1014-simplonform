@@ -58,7 +58,7 @@ PLATFORMS
 DEPENDENCIES
   minitest
   mongoid
-  pry
+  pry (~> 0.10.1)
   rack-test
   sinatra
   slim
