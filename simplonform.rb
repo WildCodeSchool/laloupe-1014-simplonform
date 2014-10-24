@@ -31,6 +31,15 @@ class Message
   include Mongoid::Attributes::Dynamic
 end
 
+# helpers
+helpers do
+  def message_params
+    params.reject do |k,v|
+      k == :a_public_token.to_s || k == "splat" || k == "captures"
+    end
+  end
+end
+
 # routes & controllers
 get "/" do
   slim :index
@@ -45,14 +54,14 @@ post "/" do
   end
 end
 
-post '/message/:a_public_token' do
-  recipient = User.find_by(token: params[:a_public_token])
+post '/message/:a_public_token' do |token|
+  recipient = User.find_by(token: token)
   if recipient.nil?
     403
   else
+    binding.pry
     message = Message.new
-    message.
-      write_attributes(params.reject{|k,v| k == :a_public_token.to_s || k == "splat" || k == "captures"})
+    message.write_attributes message_params
     message.save
     200
   end
