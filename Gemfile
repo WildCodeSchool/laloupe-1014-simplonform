@@ -5,7 +5,7 @@ gem "slim"
 gem "minitest"
 gem "rack-test"
 gem "mongoid"
-gem "tilt", '~>1.4.1'
+gem "tilt"
 group :developement do
-  gem "pry", '~>0.10.1'
+  gem "pry"
 end
