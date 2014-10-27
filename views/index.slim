@@ -1,4 +1,8 @@
-h1 Avec Simplon Village à fond la Form' :)
+h1 Avec Simplon Village je garde la Forme!
+
+- if !notice.blank?
+  p.alert.danger = notice
+
 form method="post" action="/"
   input type="text" name="email" placeholder="email"
   button type="submit"
