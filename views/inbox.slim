@@ -1,0 +1,5 @@
+h1 Voici vos messages
+- @messages.each do |message|
+	ul 
+		- message.attributes.keys.drop(2).each do |key|
+			li="#{key}:#{message.attributes[key]}"

@@ -32,6 +32,7 @@ class User
   before_create :generate_tokens
   validates_uniqueness_of :email
   validates_presence_of :email
+  has_many :messages
 
   field :email, type: String
   field :private_token, type: String
@@ -47,6 +48,7 @@ end
 class Message
   include Mongoid::Document
   include Mongoid::Attributes::Dynamic
+  belongs_to :user
 end
 
 # helpers
@@ -66,11 +68,15 @@ end
 post "/" do
   user = User.new(email: params[:email])
   if user.save
+     posturl = "#{request.base_url}/message/#{user.token}"
+     secreturl = "#{request.base_url}/message/#{user.token}/#{user.private_token}"
     Pony.mail(
       to: user.email,
       from: 'simbot@simplon-village.com',
       subject: 'Votre compte SimplonForm',
-      body: 'Coucou et bienvenue chez nous'
+      body: "Coucou et bienvenue chez nous\n\n 
+      Vous pouvez envoyer des requêtes POST à cette adresse :" + posturl + "\n
+      Vous pouvez consulter vos messages à cette adresse :" + secreturl
     )
     slim :welcome
   else
@@ -83,9 +89,23 @@ post '/message/:a_public_token' do |token|
   if recipient.nil?
     403
   else
-    message = Message.new
+    message = recipient.messages.new
     message.write_attributes message_params
     message.save
     200
+  end
+end
+
+get '/message/:token/:private_token' do
+  recipient = User.find_by(token: params[:token])
+  if recipient.nil?
+    404
+  else
+    if recipient.private_token == params[:private_token]
+      @messages = recipient.messages
+      slim :inbox
+    else 
+      403
+    end
   end
 end
