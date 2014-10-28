@@ -1,9 +1,21 @@
-h1 Avec Simplon Village je garde la Forme!
+doctype html
+html
+	head
+	  title Simplonform
+	  link href='stylesheets/test.css' rel='stylesheet' type='text/css'
 
-- if !notice.blank?
-  p.alert.danger = notice
+	body
+	div.hero
+		div.hero-inner
+			a.hero-lego
+				div.hero-copy
+					h1 Avec Simplon Village je garde la Forme!
+					p Entrez votre email pour recevoir votre clé publique et privée!
 
-form method="post" action="/"
-  input type="text" name="email" placeholder="email"
-  button type="submit"
-    | Recevoir mes tokens
+					- if !notice.blank?
+		  			p.alert.danger = notice
+
+		  		form method="post" action="/"
+		  			input type="text" name="email" placeholder="email"
+		  			button type="submit"
+		    			| Recevoir mes tokens
