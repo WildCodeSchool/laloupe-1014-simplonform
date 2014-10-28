@@ -55,7 +55,7 @@ end
 helpers do
   def message_params
     params.reject do |k,v|
-      k == :a_public_token.to_s || k == "splat" || k == "captures" || "redirect"
+      k == :a_public_token.to_s || k == "splat" || k == "captures" || k == "redirect_to"
     end
   end
 end
@@ -91,11 +91,10 @@ post '/message/:a_public_token' do |token|
   else
     message = recipient.messages.new
     message.write_attributes message_params
-    message.save
-    if params[:redirect].blank?
-      redirect back
+    if message.save && params[:redirect_to]
+      redirect params[:redirect_to]
     else
-      redirect params[:redirect]
+      redirect back
     end
   end
 end
