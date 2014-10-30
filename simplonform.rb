@@ -1,5 +1,5 @@
 require 'sinatra'
-if development?
+if development? || test?
   require 'dotenv'
   Dotenv.load
   require 'pry'
@@ -48,7 +48,14 @@ end
 class Message
   include Mongoid::Document
   include Mongoid::Attributes::Dynamic
+  before_save :set_timestamp
   belongs_to :user
+
+  field :received_at, type: DateTime
+
+  def set_timestamp
+    self.received_at = DateTime.now
+  end
 end
 
 # helpers
@@ -74,7 +81,7 @@ post "/" do
       to: user.email,
       from: 'simbot@simplon-village.com',
       subject: 'Votre compte SimplonForm',
-      body: "Coucou et bienvenue chez nous\n\n 
+      body: "Coucou et bienvenue chez nous\n\n
       Vous pouvez envoyer des requêtes POST à cette adresse :" + posturl + "\n
       Vous pouvez consulter vos messages à cette adresse :" + secreturl
     )
@@ -107,7 +114,7 @@ get '/message/:token/:private_token' do
     if recipient.private_token == params[:private_token]
       @messages = recipient.messages
       slim :inbox
-    else 
+    else
       403
     end
   end

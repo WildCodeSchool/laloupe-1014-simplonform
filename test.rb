@@ -19,24 +19,28 @@ end
 
 describe "When a user submit its email" do
   email = "yolo@yolo.com"
+
   it "should successfully redirect to a welcome page" do
     User.delete_all
     post "/", params = {email: email}
     assert last_response.ok?
     assert last_response.body.include?('Welcome')
   end
+
   it "should create a new user" do
     User.delete_all
     post "/", params = {email: email}
     assert_equal 1, User.count
     assert_equal email, User.last.email
   end
+
   it "should generate 2 tokens" do
     User.delete_all
     post "/", params = {email: email}
     assert_equal 36, User.last.token.length #uuid
     assert_equal 32, User.last.private_token.length #hex
   end
+
   it "should not create a user if the email exists in the database" do
     User.delete_all
     User.create(email: email)
@@ -47,6 +51,7 @@ describe "When a user submit its email" do
 end
 
 describe "When a user submit wrong informations" do
+
   it "should not create a user if there is no email" do
     User.delete_all
     post '/', params = {name: "JD"}
@@ -60,18 +65,20 @@ describe "When a form post a message" do
   user = User.create(email: "formowner@form.com")
   token = user.token
   message = {name: 'Jean Dupont', email: 'jd@gmail.com', content: 'Bonjour !'}
+
   it "should create a new Message" do
     skip
     Message.delete_all
-    post "/message/#{token}", params = message
+    post "/message/#{token}", message
     assert_equal 1, Message.count
   end
+
   it "should store all the attributes posted into the datatbase" do
     skip
     Message.delete_all
-    post "/message/#{token}", params = message
-    assert_equal message[:name],  Message.last.name
-    assert_equal message[:email], Message.last.email
-    assert_equal message[:content], Message.last.content
+    post "/message/#{token}", message
+    assert_equal message[:name],  Message.last[:name]
+    assert_equal message[:email], Message.last[:email]
+    assert_equal message[:content], Message.last[:content]
   end
 end
