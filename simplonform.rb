@@ -26,7 +26,9 @@ configure do
   }
 end
 
-# models definition
+#########################
+### Models definition ###
+#########################
 class User
   include Mongoid::Document
   before_create :generate_tokens
@@ -63,11 +65,14 @@ class Message
   end
 
   def display_attr
-    self.attributes.reject{ |key, val| key == 'received_at' || key == '_id' || key == 'user_id' }
+    self.attributes.reject do |key, val|
+      key == 'received_at' || key == '_id' || key == 'user_id' || key == 'author_ip'
+    end
   end
 end
-
-# helpers
+###############
+### Helpers ###
+###############
 helpers do
   def message_params
     params.reject do |k,v|
@@ -75,16 +80,20 @@ helpers do
     end
   end
 end
-
-# routes & controllers
+############################
+### Routes & Controllers ###
+############################
+# home page
 get "/" do
   slim :index, locals: {notice: ''}
 end
 
+# welcome page
 get '/welcome' do
-	slim :welcome
+  slim :welcome
 end
 
+# create a new user
 post "/" do
   user = User.new(email: params[:email])
   if user.save
@@ -94,7 +103,7 @@ post "/" do
       to: user.email,
       from: 'simbot@simplon-village.com',
       subject: 'Votre compte SimplonForm',
-      body: "Coucou et bienvenue chez nous\n\n
+      body: "Bonjour et bienvenue chez Simplon Form\n\n
       Vous pouvez envoyer des requêtes POST à cette adresse :" + posturl + "\n
       Vous pouvez consulter vos messages à cette adresse :" + secreturl
     )
@@ -104,6 +113,7 @@ post "/" do
   end
 end
 
+# create a new message
 post '/message/:a_public_token' do |token|
   recipient = User.find_by(token: token)
   if recipient.nil?
@@ -120,6 +130,7 @@ post '/message/:a_public_token' do |token|
   end
 end
 
+# index received messages
 get '/message/:token/:private_token' do
   recipient = User.find_by(token: params[:token])
   if recipient.nil?
