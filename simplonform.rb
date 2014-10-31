@@ -52,14 +52,19 @@ class Message
   belongs_to :user
 
   field :received_at, type: DateTime
+  field :author_ip, type: String
 
   def set_timestamp
     self.received_at = DateTime.now
   end
 
-	def display_attr
-		self.attributes.reject{ |key, val| key == 'received_at' || key == '_id' || key == 'user_id' }
-	end
+  def set_author_ip(request)
+    self.author_ip = request.ip
+  end
+
+  def display_attr
+    self.attributes.reject{ |key, val| key == 'received_at' || key == '_id' || key == 'user_id' }
+  end
 end
 
 # helpers
@@ -105,7 +110,8 @@ post '/message/:a_public_token' do |token|
     403
   else
     message = recipient.messages.new
-    message.write_attributes message_params
+    message.write_attributes(message_params)
+    message.set_author_ip(request)
     if message.save && params[:redirect_to]
       redirect params[:redirect_to]
     else
