@@ -24,7 +24,7 @@ describe "When a user submit its email" do
     User.delete_all
     post "/", params = {email: email}
     assert last_response.ok?
-    assert last_response.body.include?('Welcome')
+    assert last_response.body.include?('Bienvenue')
   end
 
   it "should create a new user" do

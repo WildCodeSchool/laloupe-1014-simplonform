@@ -72,6 +72,10 @@ get "/" do
   slim :index, locals: {notice: ''}
 end
 
+get '/welcome' do
+	slim :welcome
+end
+
 post "/" do
   user = User.new(email: params[:email])
   if user.save
@@ -85,7 +89,7 @@ post "/" do
       Vous pouvez envoyer des requêtes POST à cette adresse :" + posturl + "\n
       Vous pouvez consulter vos messages à cette adresse :" + secreturl
     )
-    slim :welcome
+    redirect to :welcome
   else
     slim :index, locals: {notice: 'Cet email est déjà enregistré'}
   end
