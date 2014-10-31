@@ -1,7 +1,9 @@
-h1 Voici vos messages
+h1 Boite de réception
 - @messages.each do |message|
 	ul
 		/TODO -refactor
-		strong = message.received_at.strftime('%A %d %b at %R')
+		i = message.received_at.strftime('%A %d %b at %R')
 		- message.display_attr.keys.each do |key|
-			li="#{key}:#{message.attributes[key]}"
+			li
+				b="#{key}: "
+				= "#{message.attributes[key]}"
