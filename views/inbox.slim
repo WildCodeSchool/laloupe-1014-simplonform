@@ -1,5 +1,7 @@
 h1 Voici vos messages
 - @messages.each do |message|
-	ul 
-		- message.attributes.keys.drop(2).each do |key|
+	ul
+		/TODO -refactor
+		strong = message.received_at.strftime('%A %d %b at %R')
+		- message.display_attr.keys.each do |key|
 			li="#{key}:#{message.attributes[key]}"

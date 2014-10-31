@@ -56,6 +56,10 @@ class Message
   def set_timestamp
     self.received_at = DateTime.now
   end
+
+	def display_attr
+		self.attributes.reject{ |key, val| key == 'received_at' || key == '_id' || key == 'user_id' }
+	end
 end
 
 # helpers
@@ -116,7 +120,7 @@ get '/message/:token/:private_token' do
     404
   else
     if recipient.private_token == params[:private_token]
-      @messages = recipient.messages
+      @messages = recipient.messages.sort{|x,y| y.received_at <=> x.received_at } #TODO - refactor
       slim :inbox
     else
       403
