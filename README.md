@@ -8,10 +8,10 @@
 
 ### Usage
 
-Créer un formulaire en remplaçant `YOUR_POST_URL` par l'url contenant votre clée publique reçue par email et `http://yourwebsite.com/merci.html` par l'url vers laquelle vous voulez rediriger vos utilisateurs une fois qu'ils ont répondu au formulaire.
+Créer un formulaire en remplaçant `SF_POST_URL` par l'url reçue par email et `http://yourwebsite.com/merci.html` par l'url vers laquelle vous voulez rediriger vos utilisateurs une fois qu'ils ont répondu au formulaire.
 
 ``` html
-<form action="YOUR_POST_URL" method="post">
+<form action="SF_POST_URL" method="post">
   <input type="hidden" name="redirect_to" value="http://yourwebsite.com/merci.html" />
   ...
   YOUR INPUTS HERE

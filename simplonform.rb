@@ -8,11 +8,7 @@ require 'slim'
 require 'mongoid'
 require 'pony'
 
-configure do
-  # mongodb
-  Mongoid.load!("./mongoid.yml")
-  Mongoid.raise_not_found_error = false
-  # mailer
+configure :production do
   Pony.options = {
     :via => :smtp,
     :via_options => {
@@ -24,6 +20,10 @@ configure do
       :enable_starttls_auto => true
     }
   }
+end
+configure do
+  Mongoid.load!("./mongoid.yml")
+  Mongoid.raise_not_found_error = false
 end
 
 #########################
@@ -39,6 +39,27 @@ class User
   field :email, type: String
   field :private_token, type: String
   field :token, type: String
+
+  def send_credentials(request)
+    posturl = "#{request.base_url}/message/#{self.token}"
+    secreturl = "#{request.base_url}/message/#{self.token}/#{self.private_token}"
+    Pony.mail(
+      to: self.email,
+      from: 'simbot@simplon-village.com',
+      subject: 'Votre compte SimplonForm',
+      body:
+        "Bonjour et bienvenue chez SimplonForm\n\n
+        Consultez la documentation pour connecter un formulaire à votre compte SimplonForm:\n
+        https://github.com/SimplonVillage/simplonform#usage\n
+        Vos identifiants:
+        SF_POST_URL:" + posturl + "\n
+        SF_SECRET_URL:" + secreturl + "\n\n
+        Pour consulter vos messages reçus ourvir SF_SECRET_URL dans votre navigateur.
+        Ce lien doit donc rester secret pour garantir la confidentialité de vos messages."
+    )
+  end
+
+  private
 
   def generate_tokens
     self.private_token = SecureRandom.hex
@@ -80,6 +101,7 @@ helpers do
     end
   end
 end
+
 ############################
 ### Routes & Controllers ###
 ############################
@@ -97,16 +119,7 @@ end
 post "/" do
   user = User.new(email: params[:email])
   if user.save
-     posturl = "#{request.base_url}/message/#{user.token}"
-     secreturl = "#{request.base_url}/message/#{user.token}/#{user.private_token}"
-    Pony.mail(
-      to: user.email,
-      from: 'simbot@simplon-village.com',
-      subject: 'Votre compte SimplonForm',
-      body: "Bonjour et bienvenue chez Simplon Form\n\n
-      Vous pouvez envoyer des requêtes POST à cette adresse :" + posturl + "\n
-      Vous pouvez consulter vos messages à cette adresse :" + secreturl
-    )
+    user.send_credentials(request)
     redirect to :welcome
   else
     slim :index, locals: {notice: 'Cet email est déjà enregistré'}
