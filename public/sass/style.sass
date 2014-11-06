@@ -2,8 +2,17 @@
 @import neat/neat
 @import base/base
 
+$mobile: new-breakpoint(max-width 480px 4)
+@import url(http://fonts.googleapis.com/css?family=Merriweather:300|Open+Sans:700)
+$serif: 'Merriweather'
+$sans-serif:'Open Sans'
+
+
+body
+  margin: 0
+
 .hero
-  $hero-background-top: darken($base-accent-color, 25) 
+  $hero-background-top: darken($base-accent-color, 25)
   $hero-background-bottom: adjust-hue($hero-background-top, -70)
   $hero-color: white
   $gradient-angle: 10deg
@@ -28,28 +37,36 @@
     text-align: center
     color: $hero-color
 
-    button
-      @include button(simple, $base-background-color)
-      font-size: $base-font-size
-      outline: none
-
     .hero-copy
       text-align: center
-
+      h1, p.alert, input, button
+        font-family: $sans-serif
       h1
         font-size: 1.6em
         margin-bottom: .5em
-
         @include media(large-screen)
           font-size: 1.8em
-
       p
         font-family: $serif
         margin: auto
-        margin-bottom: 3em 
+        margin-bottom: 3em
         font-weight: 200
         line-height: 1.4em
-
         @include media(large-screen)
           font-size: 1.1em
           max-width: 40%
+      input
+        @include shift(3)
+        @include span-columns(6)
+        @include media($mobile)
+          @include span-columns(4)
+          @include shift(0)
+      button
+        @include button(simple, $base-background-color)
+        @include span-columns(4)
+        @include shift(4)
+        font-size: $base-font-size
+        outline: none
+        @include media($mobile)
+          @include span-columns(4)
+          @include shift(0)

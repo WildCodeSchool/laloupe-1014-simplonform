@@ -3,6 +3,7 @@
  * http://neat.bourbon.io
  * Copyright 2012-2014 thoughtbot, inc.
  * MIT License */
+@import url(http://fonts.googleapis.com/css?family=Merriweather:300|Open+Sans:700);
 html {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -235,6 +236,9 @@ input[type="submit"] {
   vertical-align: middle;
   white-space: nowrap; }
 
+body {
+  margin: 0; }
+
 .hero {
   background: url("https//raw.githubusercontent.com/thoughtbot/refills/master/source/images/mountains.png"), -webkit-linear-gradient(10deg, #217142, #214271), no-repeat #214271 scroll;
   background: url("https//raw.githubusercontent.com/thoughtbot/refills/master/source/images/mountains.png"), linear-gradient(10deg, #217142, #214271), no-repeat #214271 scroll;
@@ -261,60 +265,10 @@ input[type="submit"] {
       content: "";
       display: table;
       clear: both; }
-    .hero .hero-inner button {
-      border: 1px solid #dbdbdb;
-      border-radius: 3px;
-      box-shadow: inset 0 1px 0 0 white;
-      color: #333333;
-      display: inline-block;
-      font-size: inherit;
-      font-weight: bold;
-      background-color: white;
-      background-image: -webkit-linear-gradient(white, #e3e3e3);
-      background-image: linear-gradient(white, #e3e3e3);
-      padding: 7px 18px;
-      text-decoration: none;
-      text-shadow: 0 1px 0 white;
-      background-clip: padding-box;
-      border: 1px solid #dfd8d8;
-      border-radius: 3px;
-      box-shadow: inset 0 1px 0 0 white;
-      color: #333333;
-      display: inline-block;
-      font-size: inherit;
-      font-weight: bold;
-      background-color: white;
-      background-image: -webkit-linear-gradient(white, #e5e0e0);
-      background-image: linear-gradient(white, #e5e0e0);
-      padding: 7px 18px;
-      text-decoration: none;
-      text-shadow: 0 1px 0 white;
-      background-clip: padding-box;
-      font-size: 1em;
-      outline: none; }
-      .hero .hero-inner button:hover:not(:disabled) {
-        box-shadow: inset 0 1px 0 0 white;
-        cursor: pointer;
-        background-color: #f2f2f2;
-        background-image: -webkit-linear-gradient(#f2f2f2, #dbdbdb);
-        background-image: linear-gradient(#f2f2f2, #dbdbdb); }
-      .hero .hero-inner button:active:not(:disabled), .hero .hero-inner button:focus:not(:disabled) {
-        border: 1px solid #dbdbdb;
-        box-shadow: inset 0 0 8px 4px #d4d4d4, inset 0 0 8px 4px #d4d4d4; }
-      .hero .hero-inner button:hover:not(:disabled) {
-        box-shadow: inset 0 1px 0 0 white;
-        cursor: pointer;
-        background-color: #f2f2f2;
-        background-image: -webkit-linear-gradient(#f2f2f2, #ded8d8);
-        background-image: linear-gradient(#f2f2f2, #ded8d8); }
-      .hero .hero-inner button:active:not(:disabled), .hero .hero-inner button:focus:not(:disabled) {
-        border: 1px solid #dfd8d8;
-        box-shadow: inset 0 0 8px 4px #d7d1d1, inset 0 0 8px 4px #d7d1d1; }
-      .hero .hero-inner button:disabled {
-        opacity: 0.5;
-        cursor: not-allowed; }
     .hero .hero-inner .hero-copy {
       text-align: center; }
+      .hero .hero-inner .hero-copy h1, .hero .hero-inner .hero-copy p.alert, .hero .hero-inner .hero-copy input, .hero .hero-inner .hero-copy button {
+        font-family: "Open Sans"; }
       .hero .hero-inner .hero-copy h1 {
         font-size: 1.6em;
         margin-bottom: 0.5em; }
@@ -322,7 +276,7 @@ input[type="submit"] {
           .hero .hero-inner .hero-copy h1 {
             font-size: 1.8em; } }
       .hero .hero-inner .hero-copy p {
-        font-family: Georgia, Cambria, "Times New Roman", Times, serif;
+        font-family: "Merriweather";
         margin: auto;
         margin-bottom: 3em;
         font-weight: 200;
@@ -331,5 +285,90 @@ input[type="submit"] {
           .hero .hero-inner .hero-copy p {
             font-size: 1.1em;
             max-width: 40%; } }
+      .hero .hero-inner .hero-copy input {
+        margin-left: 25.58941%;
+        float: left;
+        display: block;
+        margin-right: 2.35765%;
+        width: 48.82117%; }
+        .hero .hero-inner .hero-copy input:last-child {
+          margin-right: 0; }
+        @media screen and (max-width: 480px) {
+          .hero .hero-inner .hero-copy input {
+            float: left;
+            display: block;
+            margin-right: 7.42297%;
+            width: 100%;
+            margin-left: 0%; }
+            .hero .hero-inner .hero-copy input:last-child {
+              margin-right: 0; } }
+      .hero .hero-inner .hero-copy button {
+        border: 1px solid #dbdbdb;
+        border-radius: 3px;
+        box-shadow: inset 0 1px 0 0 white;
+        color: #333333;
+        display: inline-block;
+        font-size: inherit;
+        font-weight: bold;
+        background-color: white;
+        background-image: -webkit-linear-gradient(white, #e3e3e3);
+        background-image: linear-gradient(white, #e3e3e3);
+        padding: 7px 18px;
+        text-decoration: none;
+        text-shadow: 0 1px 0 white;
+        background-clip: padding-box;
+        border: 1px solid #dfd8d8;
+        border-radius: 3px;
+        box-shadow: inset 0 1px 0 0 white;
+        color: #333333;
+        display: inline-block;
+        font-size: inherit;
+        font-weight: bold;
+        background-color: white;
+        background-image: -webkit-linear-gradient(white, #e5e0e0);
+        background-image: linear-gradient(white, #e5e0e0);
+        padding: 7px 18px;
+        text-decoration: none;
+        text-shadow: 0 1px 0 white;
+        background-clip: padding-box;
+        float: left;
+        display: block;
+        margin-right: 2.35765%;
+        width: 31.76157%;
+        margin-left: 34.11922%;
+        font-size: 1em;
+        outline: none; }
+        .hero .hero-inner .hero-copy button:hover:not(:disabled) {
+          box-shadow: inset 0 1px 0 0 white;
+          cursor: pointer;
+          background-color: #f2f2f2;
+          background-image: -webkit-linear-gradient(#f2f2f2, #dbdbdb);
+          background-image: linear-gradient(#f2f2f2, #dbdbdb); }
+        .hero .hero-inner .hero-copy button:active:not(:disabled), .hero .hero-inner .hero-copy button:focus:not(:disabled) {
+          border: 1px solid #dbdbdb;
+          box-shadow: inset 0 0 8px 4px #d4d4d4, inset 0 0 8px 4px #d4d4d4; }
+        .hero .hero-inner .hero-copy button:hover:not(:disabled) {
+          box-shadow: inset 0 1px 0 0 white;
+          cursor: pointer;
+          background-color: #f2f2f2;
+          background-image: -webkit-linear-gradient(#f2f2f2, #ded8d8);
+          background-image: linear-gradient(#f2f2f2, #ded8d8); }
+        .hero .hero-inner .hero-copy button:active:not(:disabled), .hero .hero-inner .hero-copy button:focus:not(:disabled) {
+          border: 1px solid #dfd8d8;
+          box-shadow: inset 0 0 8px 4px #d7d1d1, inset 0 0 8px 4px #d7d1d1; }
+        .hero .hero-inner .hero-copy button:disabled {
+          opacity: 0.5;
+          cursor: not-allowed; }
+        .hero .hero-inner .hero-copy button:last-child {
+          margin-right: 0; }
+        @media screen and (max-width: 480px) {
+          .hero .hero-inner .hero-copy button {
+            float: left;
+            display: block;
+            margin-right: 7.42297%;
+            width: 100%;
+            margin-left: 0%; }
+            .hero .hero-inner .hero-copy button:last-child {
+              margin-right: 0; } }
 
 /*# sourceMappingURL=style.css.map */

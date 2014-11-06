@@ -128,6 +128,8 @@ post "/" do
   if user.save
     user.send_credentials(request)
     redirect to :welcome
+  elsif params[:email].blank?
+    slim :index, locals: {notice: 'Merci de renseigner votre email'}
   else
     slim :index, locals: {notice: 'Cet email est déjà enregistré'}
   end
