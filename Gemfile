@@ -12,7 +12,12 @@ gem "thin"
 
 group :development do
   gem "pry"
+  gem "bourbon"
+  gem "neat"
+  gem "bitters"
   gem "rerun"
+  gem "better_errors"
+  gem "binding_of_caller"
 end
 group :test do
   gem "minitest"

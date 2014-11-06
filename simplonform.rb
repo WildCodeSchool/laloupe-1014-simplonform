@@ -7,6 +7,17 @@ end
 require 'slim'
 require 'mongoid'
 require 'pony'
+require "better_errors"
+
+configure do
+  Mongoid.load!("./mongoid.yml")
+  Mongoid.raise_not_found_error = false
+end
+
+configure :development do
+  use BetterErrors::Middleware
+  BetterErrors.application_root = __dir__
+end
 
 configure :production do
   Pony.options = {
@@ -20,10 +31,6 @@ configure :production do
       :enable_starttls_auto => true
     }
   }
-end
-configure do
-  Mongoid.load!("./mongoid.yml")
-  Mongoid.raise_not_found_error = false
 end
 
 #########################
