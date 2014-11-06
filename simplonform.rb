@@ -3,11 +3,11 @@ if development? || test?
   require 'dotenv'
   Dotenv.load
   require 'pry'
+  require "better_errors"
 end
 require 'slim'
 require 'mongoid'
 require 'pony'
-require "better_errors"
 
 configure do
   Mongoid.load!("./mongoid.yml")
