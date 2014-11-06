@@ -23,3 +23,6 @@ group :test do
   gem "minitest"
   gem "rack-test"
 end
+group :production do
+  gem 'puma'
+end
