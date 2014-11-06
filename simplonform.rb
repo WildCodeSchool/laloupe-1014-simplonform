@@ -137,6 +137,7 @@ end
 
 # create a new message
 post '/message/:a_public_token' do |token|
+  puts request.referer
   recipient = User.find_by(token: token)
   if recipient.nil?
     403
