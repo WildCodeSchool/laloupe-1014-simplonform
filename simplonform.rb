@@ -98,7 +98,7 @@ class Message
 
   def display_attr
     self.attributes.reject do |key, val|
-      key == 'received_at' || key == '_id' || key == 'user_id' || key == 'author_ip'
+      key == 'received_at' || key == '_id' || key == 'user_id' || key == 'author_ip' || key == 'referer'
     end
   end
 end
