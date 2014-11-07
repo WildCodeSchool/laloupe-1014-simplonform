@@ -91,7 +91,7 @@ class Message
   end
 
   def write_all_attributes(params, request)
-    self.write_attribues(params)
+    self.write_attributes(params)
     self.referer = request.referer
     self.author_ip = request.ip
   end
