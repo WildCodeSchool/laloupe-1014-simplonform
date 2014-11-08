@@ -1,16 +1,45 @@
 @import bourbon/bourbon
-@import neat/neat
 @import base/base
+@import neat/neat
 
 $mobile: new-breakpoint(max-width 480px 4)
-@import url(http://fonts.googleapis.com/css?family=Merriweather:300|Open+Sans:700)
+@import url(http://fonts.googleapis.com/css?family=Merriweather:300|Source+Sans+Pro:400,700)
 $serif: 'Merriweather'
-$sans-serif:'Open Sans'
+$sans-serif:'Source Sans Pro'
 
 
 body
   margin: 0
+  background-color: #FFFFC5
 
+// Flash messages
+/////////////////
+$flash-red: #FBE3E4
+$flash-yellow: #FFF6BF
+$flash-green: #E6EFC2
+
+%flash-base
+  display: block
+  font-weight: 700
+  margin-bottom: $base-spacing / 2
+  padding: $base-spacing / 2
+
+$flashes: (alert: $flash-yellow, error: $flash-red, notice: lighten($base-accent-color, 40), success: $flash-green)
+
+@each $flash, $color in $flashes
+  .flash-#{$flash}
+    @extend %flash-base
+    background: $color
+    color: darken($color, 60)
+
+    a
+      color: darken($color, 70)
+      border-bottom: 1px solid transparentize(darken($color, 70), .7)
+      &:hover
+        color: darken($color, 90)
+
+// Subscribe bloc
+/////////////////
 .hero
   $hero-background-top: darken($base-accent-color, 25)
   $hero-background-bottom: adjust-hue($hero-background-top, -70)
@@ -39,34 +68,43 @@ body
 
     .hero-copy
       text-align: center
-      h1, p.alert, input, button
+      h1, h2,  p, input, button
         font-family: $sans-serif
       h1
-        font-size: 1.6em
+        font-size: 2em
+        font-weight: 700
         margin-bottom: .5em
-        @include media(large-screen)
-          font-size: 1.8em
-      p
-        font-family: $serif
-        margin: auto
+      h2
+        font-size: 1.8em
         margin-bottom: 3em
-        font-weight: 200
+      p
+        margin: auto
+        margin-bottom: 1em
+        font-weight: 700
         line-height: 1.4em
         @include media(large-screen)
           font-size: 1.1em
           max-width: 40%
       input
-        @include shift(3)
-        @include span-columns(6)
+        @include shift(4)
+        @include span-columns(4)
         @include media($mobile)
-          @include span-columns(4)
           @include shift(0)
       button
         @include button(simple, $base-background-color)
-        @include span-columns(4)
-        @include shift(4)
         font-size: $base-font-size
         outline: none
-        @include media($mobile)
-          @include span-columns(4)
-          @include shift(0)
+        clear: both
+        display: block
+        margin: auto
+
+.howto
+  @include outer-container
+  .howto-content
+    @include span-columns(8)
+    @include shift(2)
+    padding: 3em
+    h2
+      margin-bottom: .5em
+    ol
+      list-style-type: decimal

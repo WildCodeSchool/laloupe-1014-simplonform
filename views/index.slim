@@ -1,12 +1,19 @@
-div.hero
-  div.hero-inner
+.hero
+  .hero-inner
     a.hero-lego
-    div.hero-copy
-      h1 SimplonForm vous rend le formulaire facile
-      p Entrez votre email pour recevoir vos clés d'accès.
+    .hero-copy
+      h1 SIMPLON FORM
+      h2 Une boite de réception pour tous vos formulaires
       - if !notice.blank?
-        p.alert.danger = notice
+        p.flash-error = notice
       form method="post" action="/"
         input type="text" name="email" placeholder="email"
         button type="submit"
-          | Recevoir mes tokens
+          | Recevoir ma clé d'accès
+.howto
+  .howto-content
+    h2 Installation
+    ol
+      li Créer un formulaire html avec la `method='post'`
+      li Insérer le lien reçu par email dans `action='SF_POST_URL' ...`
+      li Ajouter une url vers laquelle rediriger vos utilisateurs 
