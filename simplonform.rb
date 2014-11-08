@@ -80,21 +80,25 @@ class Message
   include Mongoid::Attributes::Dynamic
   before_save :set_timestamp
   belongs_to :user
+  # TODO - Regrouper les messages par referer
 
   field :received_at, type: DateTime
   field :author_ip, type: String
+  field :referer, type: String
 
   def set_timestamp
     self.received_at = DateTime.now
   end
 
-  def set_author_ip(request)
+  def write_all_attributes(params, request)
+    self.write_attributes(params)
+    self.referer = request.referer
     self.author_ip = request.ip
   end
 
   def display_attr
     self.attributes.reject do |key, val|
-      key == 'received_at' || key == '_id' || key == 'user_id' || key == 'author_ip'
+      key == 'received_at' || key == '_id' || key == 'user_id' || key == 'author_ip' || key == 'referer'
     end
   end
 end
@@ -142,8 +146,7 @@ post '/message/:a_public_token' do |token|
     403
   else
     message = recipient.messages.new
-    message.write_attributes(message_params)
-    message.set_author_ip(request)
+    message.write_all_attributes(message_params, request)
     if message.save && params[:redirect_to]
       redirect params[:redirect_to]
     else
