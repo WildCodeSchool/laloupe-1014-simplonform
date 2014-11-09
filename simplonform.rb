@@ -12,14 +12,6 @@ require 'pony'
 configure do
   Mongoid.load!("./mongoid.yml")
   Mongoid.raise_not_found_error = false
-end
-
-configure :development do
-  use BetterErrors::Middleware
-  BetterErrors.application_root = __dir__
-end
-
-configure :production do
   Pony.options = {
     :via => :smtp,
     :via_options => {
@@ -33,6 +25,11 @@ configure :production do
   }
 end
 
+configure :development do
+  use BetterErrors::Middleware
+  BetterErrors.application_root = __dir__
+end
+
 #########################
 ### Models definition ###
 #########################
@@ -41,7 +38,7 @@ class User
   before_create :generate_tokens
   validates_uniqueness_of :email
   validates_presence_of :email
-  has_many :messages
+  has_many :referers
 
   field :email, type: String
   field :private_token, type: String
@@ -75,30 +72,30 @@ class User
   end
 end
 
+class Referer
+  include Mongoid::Document
+  belongs_to :user
+  embeds_many :messages
+
+  field :url, type: String
+end
+
 class Message
   include Mongoid::Document
   include Mongoid::Attributes::Dynamic
   before_save :set_timestamp
-  belongs_to :user
-  # TODO - Regrouper les messages par referer
+  embedded_in :referer
 
   field :received_at, type: DateTime
   field :author_ip, type: String
-  field :referer, type: String
 
   def set_timestamp
     self.received_at = DateTime.now
   end
 
-  def write_all_attributes(params, request)
-    self.write_attributes(params)
-    self.referer = request.referer
-    self.author_ip = request.ip
-  end
-
   def display_attr
     self.attributes.reject do |key, val|
-      key == 'received_at' || key == '_id' || key == 'user_id' || key == 'author_ip' || key == 'referer'
+      key == 'received_at' || key == '_id' || key == 'author_ip'
     end
   end
 end
@@ -107,9 +104,12 @@ end
 ###############
 helpers do
   def message_params
-    params.reject do |k,v|
-      k == :a_public_token.to_s || k == "splat" || k == "captures" || k == "redirect_to"
-    end
+    request_params = { author_ip: request.ip }
+    params
+      .merge(request_params)
+      .reject do |k,v|
+        k == :a_public_token.to_s || k == "splat" || k == "captures" || k == "redirect_to"
+      end
   end
 end
 
@@ -141,12 +141,14 @@ end
 
 # create a new message
 post '/message/:a_public_token' do |token|
-  recipient = User.find_by(token: token)
-  if recipient.nil?
+  user = User.find_by(token: token)
+  if user.nil?
     403
   else
-    message = recipient.messages.new
-    message.write_all_attributes(message_params, request)
+    message = user.referers
+      .find_or_create_by(url: request.referer)
+      .messages.new
+    message.write_attributes(message_params)
     if message.save && params[:redirect_to]
       redirect params[:redirect_to]
     else
@@ -157,12 +159,12 @@ end
 
 # index received messages
 get '/message/:token/:private_token' do
-  recipient = User.find_by(token: params[:token])
-  if recipient.nil?
+  user = User.find_by(token: params[:token])
+  if user.nil?
     404
   else
-    if recipient.private_token == params[:private_token]
-      @messages = recipient.messages.sort{|x,y| y.received_at <=> x.received_at } #TODO - refactor
+    if user.private_token == params[:private_token]
+      @inboxes = user.referers
       slim :inbox
     else
       403
