@@ -1,2 +1,2 @@
-require './simplonform'
+require './app'
 run Sinatra::Application

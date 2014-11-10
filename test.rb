@@ -1,7 +1,7 @@
 ENV['RACK_ENV'] = 'test'
 require 'minitest/autorun'
 require 'rack/test'
-require_relative 'simplonform.rb'
+require_relative 'app.rb'
 
 include Rack::Test::Methods
 I18n.enforce_available_locales = false
