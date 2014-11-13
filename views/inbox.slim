@@ -1,8 +1,9 @@
 h1 Boite de réception
-p = "Réception des notifications par: #{@user.email}"
-form action="/user/#{@user.token}/#{@user.private_token}" method="post"
-  input type="text" name="email" placeholder="email"
-  input type="submit" value="Changer l'adresse de notification"
+p.notification
+  = "Envoi des notifications à "
+  strong = "#{@user.email}"
+  = " - "
+  a href="/user/edit/#{@user.token}/#{@user.private_token}" Modifier
 
 - @inboxes.each do |box|
   h2 id="#{box.id}" = box.url

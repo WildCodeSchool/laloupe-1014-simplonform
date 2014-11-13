@@ -1,0 +1,5 @@
+h1 Modifier l'email de notification
+form action="/user/#{@user.token}/#{@user.private_token}" method="post"
+  input type="hidden" name="_method" value="put"
+  input type="text" name="email" value="#{@user.email}"
+  input type="submit" value="Mettre à jour"

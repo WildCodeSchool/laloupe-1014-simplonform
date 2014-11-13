@@ -53,13 +53,30 @@ post "/user/new" do
   end
 end
 
-post '/user/:token/:private_token' do
+get "/user/edit/:token/:private_token" do
+  @user = User.find_by(token: params[:token])
+  if @user.nil?
+    404
+  else
+    if @user.private_token == params[:private_token]
+      slim 'user/edit'.to_sym
+    else
+      403
+    end
+  end
+end
+
+put '/user/:token/:private_token' do
   user = User.find_by(token: params[:token])
   if user.nil?
     404
   else
-    user.update_attributes!(email: params[:email])
-    redirect to "/message/#{user.token}/#{user.private_token}"
+    if user.private_token == params[:private_token]
+      user.update_attributes!(email: params[:email])
+      redirect to "/message/#{user.token}/#{user.private_token}"
+    else
+      403
+    end
   end
 end
 
