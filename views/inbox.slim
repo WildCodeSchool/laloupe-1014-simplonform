@@ -1,4 +1,9 @@
 h1 Boite de réception
+p = "Réception des notifications par: #{@user.email}"
+form action="/user/#{@user.token}/#{@user.private_token}" method="post"
+  input type="text" name="email" placeholder="email"
+  input type="submit" value="Changer l'adresse de notification"
+
 - @inboxes.each do |box|
   h2 id="#{box.id}" = box.url
   - box.messages.each do |message|

@@ -6,7 +6,7 @@
       h2 Une boite de réception pour tous vos formulaires
       - if !notice.blank?
         p.flash-error = notice
-      form method="post" action="/"
+      form method="post" action="/user/new"
         input type="text" name="email" placeholder="email"
         button type="submit"
           | Recevoir ma clé d'accès
@@ -16,4 +16,4 @@
     ol
       li Créer un formulaire html avec la `method='post'`
       li Insérer le lien reçu par email dans `action='SF_POST_URL' ...`
-      li Ajouter une url vers laquelle rediriger vos utilisateurs 
+      li Ajouter une url vers laquelle rediriger vos utilisateurs

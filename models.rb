@@ -31,6 +31,8 @@ class User
   field :private_token, type: String
   field :token, type: String
 
+  index({ email: 1, token: 1 }, { unique: true })
+
   def send_credentials(request)
     posturl = "#{request.base_url}/message/#{self.token}"
     secreturl = "#{request.base_url}/message/#{self.token}/#{self.private_token}"

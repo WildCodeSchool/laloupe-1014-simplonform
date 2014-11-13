@@ -41,7 +41,7 @@ get '/welcome' do
 end
 
 # create a new user
-post "/" do
+post "/user/new" do
   user = User.new(email: params[:email])
   if user.save
     user.send_credentials(request)
@@ -50,6 +50,16 @@ post "/" do
     slim :index, locals: {notice: 'Merci de renseigner votre email'}
   else
     slim :index, locals: {notice: 'Cet email est déjà enregistré'}
+  end
+end
+
+post '/user/:token/:private_token' do
+  user = User.find_by(token: params[:token])
+  if user.nil?
+    404
+  else
+    user.update_attributes!(email: params[:email])
+    redirect to "/message/#{user.token}/#{user.private_token}"
   end
 end
 
@@ -73,12 +83,12 @@ end
 
 # index received messages
 get '/message/:token/:private_token' do
-  user = User.find_by(token: params[:token])
-  if user.nil?
+  @user = User.find_by(token: params[:token])
+  if @user.nil?
     404
   else
-    if user.private_token == params[:private_token]
-      @inboxes = user.referers
+    if @user.private_token == params[:private_token]
+      @inboxes = @user.referers
       slim :inbox
     else
       403
