@@ -12,9 +12,9 @@
       ul
         i
           = message.received_at.strftime('received on %A %d %b at %R')
-          - if message.referer
+          - if message.referer.url
             br
-            = message.referer
+            = message.referer.url
           - if message.author_ip
             br
             = message.author_ip
