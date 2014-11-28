@@ -113,3 +113,15 @@ get '/message/:token/:private_token' do
   end
 end
 
+get '/message/delete/:id/:token/:private_token' do
+  @user = User.find_by(token: params[:token])
+  if @user.nil?
+    404
+  else
+    if @user.private_token == params[:private_token]
+      message = @user.referers.map{|site| site.messages.find(params[:id]) }.compact.first
+      message.delete if message && message.referer.user.id == @user.id
+      redirect "/message/#{params[:token]}/#{params[:private_token]}"
+    end
+  end
+end
