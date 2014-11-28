@@ -105,7 +105,7 @@ get '/message/:token/:private_token' do
     404
   else
     if @user.private_token == params[:private_token]
-      @inboxes = @user.referers
+      @inboxes = @user.referers.map { |inbox| inbox.messages.count > 0 ? inbox : nil }.compact
       slim :inbox
     else
       403

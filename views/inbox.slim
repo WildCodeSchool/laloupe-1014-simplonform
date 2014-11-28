@@ -1,13 +1,13 @@
 .container
   h1 Boite de réception
   p.notification
-    = "Envoi des notifications à "
+    = "Réception des notifications par "
     strong = "#{@user.email}"
     = " - "
     a href="/user/edit/#{@user.token}/#{@user.private_token}" Modifier
 
   - @inboxes.each do |box|
-    h2 id="#{box.id}" = box.url
+    h2 id="#{box.id}" = "Messages reçus via #{box.url}"
     - box.messages.each do |message|
       ul
         i
