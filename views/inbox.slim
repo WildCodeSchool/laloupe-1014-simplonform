@@ -22,6 +22,5 @@
           li
             b="#{key}: "
             = "#{message.attributes[key]}"
-          // ajout d'un lien pour supprimer le message
-          a href="/message/delete/#{message.id}/#{@user.token}/#{@user.private_token}" Supprimer
+        a href="/message/delete/#{message.id}/#{@user.token}/#{@user.private_token}" Supprimer
         hr
