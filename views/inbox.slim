@@ -7,17 +7,17 @@
     a href="/user/edit/#{@user.token}/#{@user.private_token}" Modifier
 
   - @inboxes.each do |box|
-    h2 id="#{box.id}" = "Messages reçus via #{box.url}"
+    h3 id="#{box.id}"
+      | Via 
+      a href="#{box.url}" = URI.parse(box.url).host
     - box.messages.each do |message|
       ul
         i
-          = message.received_at.strftime('received on %A %d %b at %R')
-          - if message.referer.url
-            br
-            = message.referer.url
+          = message.received_at.strftime('on %A %d %b at %R')
           - if message.author_ip
             br
-            = message.author_ip
+        b IP auteur: 
+        = message.author_ip
         - message.display_attr.keys.each do |key|
           li
             b="#{key}: "
