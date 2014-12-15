@@ -90,8 +90,13 @@ post '/message/:a_public_token' do |token|
       .find_or_create_by(url: request.referer)
       .messages.new
     message.write_attributes(message_params)
-    if message.save && params[:redirect_to]
-      redirect params[:redirect_to]
+    if message.save
+      message.notify_owner(request)
+      if params[:redirect_to]
+        redirect params[:redirect_to]
+      else
+        redirect back
+      end
     else
       redirect back
     end

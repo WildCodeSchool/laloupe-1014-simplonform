@@ -11,7 +11,7 @@
       | Via 
       a href="#{box.url}" = URI.parse(box.url || 'http://localhost').host
     - box.messages.each do |message|
-      ul
+      ul id="#{message.id}"
         i
           = message.received_at.strftime('on %A %d %b at %R')
           - if message.author_ip
