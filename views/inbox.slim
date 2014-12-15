@@ -10,7 +10,7 @@
     h3 id="#{box.id}"
       | Via 
       a href="#{box.url}" = URI.parse(box.url || 'http://localhost').host
-    - box.messages.each do |message|
+    - box.messages.reverse.each do |message|
       ul id="#{message.id}"
         i
           = message.received_at.strftime('on %A %d %b at %R')
