@@ -243,7 +243,7 @@ html {
 
 body {
   margin: 0;
-  background-color: #FFFFC5; }
+  background-color: #f6f6f6; }
 
 .flash-alert, .flash-error, .flash-notice, .flash-success {
   display: block;
