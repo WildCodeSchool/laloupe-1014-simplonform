@@ -90,16 +90,20 @@ class Message
 
   def notify_owner(request)
     user = referer.user
-    message_url = "#{request.base_url}/message/#{user.token}/#{user.private_token}\##{id}"
+    #message_url = "#{request.base_url}/message/#{user.token}/#{user.private_token}\##{id}"
+
+    body_content = ""
+    display_attr.keys.each do |key|
+      body_content += "# #{key}\n\t| #{attributes[key]}\n\n"
+    end
+    body_content += "# IP auteur\n\t| #{author_ip}\n"
+
     Pony.mail(
       to: user.email,
       from: 'simbot@simplon-village.com',
-      subject: "Nouveau message depuis #{ URI.parse(referer.url || 'http://localhost').host }",
-      body:
-        "Lire le message: #{message_url}"
-
+      subject: "Nouveau message posté sur #{ URI.parse(referer.url || 'http://localhost').host }",
+      body: body_content
     )
   end
-
 end
 
