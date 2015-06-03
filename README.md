@@ -1,4 +1,4 @@
-## Simplon Form
+## SimpL Form
 
 À fond la Form avec Wild Code School !
 
