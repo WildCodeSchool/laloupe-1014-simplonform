@@ -1,12 +1,10 @@
 ## Simplon Form
 
-À fond la Form avec Simplon Village !
+À fond la Form avec Wild Code School !
 
-`http://form.simplon-village.com`
+`http://form.innoveduc.fr
 
 [![Code Climate](https://codeclimate.com/github/SimplonVillage/simplonform/badges/gpa.svg)](https://codeclimate.com/github/SimplonVillage/simplonform)
-
-[![Build Status](https://travis-ci.org/SimplonVillage/simplonform.svg)](https://travis-ci.org/SimplonVillage/simplonform)
 
 ### Usage
 
